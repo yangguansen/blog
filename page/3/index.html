@@ -243,6 +243,294 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/08/20/反馈页面项目总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/20/反馈页面项目总结/" itemprop="url">反馈页面项目总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-20T19:40:02+08:00">
+                2017-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/08/20/反馈页面项目总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/08/20/反馈页面项目总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>这个页面是用vue构建，用来内嵌APP中进行用户反馈交互，反馈页面是一个web聊天记录页面，也可以编辑内容上传图片发送对话。</p>
+<blockquote>
+<p>踩到的坑</p>
+</blockquote>
+<p>1、每一条对话数据需要显示数据时间，连续一分钟内的几条对话数据只显示第一条对话的时间。通过v-for循环列出数据时间，每一条循环通过index去判断当前item与index-1的item的时间差，但是第一条会报错，因为取不到第0条的数据。<br>解决方案：因为vue数据绑定属性只能写变量，不能写语句，所以就无法在标签中去判断是否是第一条数据。就算是用二元操作符也无法识别，所以用<code>(dialogItems[index-1] &amp;&amp; dialogItems[index-1].createDate) || 0)</code>就可以筛选出第一条，并把他的上一条设为<code>0</code>.</p>
+<p>2、后端返回的时间格式是<code>2017-10-10 13:30:00</code>的格式，所以用<code>Date.parse()</code>来转化成时间戳进行比较，但是在手机端无法识别<code>-</code>格式的时间，所以<code>Date.parse()</code>无效，需要用<code>.replace(/-/g,&#39;/&#39;)</code>来转化成<code>/</code>格式，再用<code>Date.parse()</code></p>
+<p>3、对话页面需要一进入就把页面拉到最底部来显示最新对话，可以用<code>scrollTo(0,列表高度)</code>来让页面滚动到底部。</p>
+<p>4、输入页面的输入框<code>textarea</code>需要根据输入文本高度增加而增加，可以用vue的input事件来监听textarea的<code>scrollHeight</code>,使他的高度等于scrollHeight即可动态变高。</p>
+<p>5、编辑页面上传图片需要有删除功能，但是当点击删除时，src数据绑定的变量清空后，src并没有清空，需要再把src设为一个字符串，这样页面上的图片便可删除，也可以用vue的<code>$nextTick</code>的回调方法来清空。</p>
+<p>6、上传图片使用formData来提交，但是一直提交不过去，后来得知，是项目有axios的config配置，把上传的内容给序列化了，在axios中设置<code>header:multipart/form-data</code>,然后在config中去匹配该header使其不序列化即可。</p>
+<p>7、在对话列表页点击编辑需要跳转到反馈编辑页面并自动弹出手机软键盘，使用focus()方法可以弹出。但是需要在对话列表页点击按钮才弹出，直接进入编辑页面并不会弹出。猜测是手机监测用户交互行为所设的屏障。</p>
+<p>8、上传完照片后，有个替换功能，可以重新选择照片，就是点击替换按钮去触发input事件，这里有的<code>mouseEvent</code>，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const evt = new MouseEvent( &apos;click&apos;, &#123; bubbles: false, cancelable: true, view: window &#125; );</span><br><span class="line">this.$refs.fileBtn.dispatchEvent( evt );</span><br></pre></td></tr></table></figure>
+<p>这样就可以触发<code>input file</code>的点击事件</p>
+<p>（完）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/07/19/设计模式学习之三-—-观察者模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/设计模式学习之三-—-观察者模式/" itemprop="url">设计模式学习之三 — 观察者模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T20:45:09+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/19/设计模式学习之三-—-观察者模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2017/07/19/设计模式学习之三-—-观察者模式/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>观察者模式介绍</p>
+</blockquote>
+<p>又叫发布-订阅模式，是js事件模式中常见的一种，比如jquery的点击事件，在我们声明点击事件后，当我们用<code>trigger</code>方法去触发<code>click</code>事件时，事件会被响应，这就是一种监听者模式，</p>
+<blockquote>
+<p>观察者模式应用场景</p>
+</blockquote>
+<p>某一件事中，我们声明了一个事件A，然后想监听A方法的触发。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">var event = &#123;</span><br><span class="line">	clientList: [],</span><br><span class="line">	listen: function(key, fn)&#123;</span><br><span class="line">		if( !this.clientList[key] )&#123;</span><br><span class="line">			this.clientList[key] = [];</span><br><span class="line">		&#125;</span><br><span class="line">		this.clientList[key].push(fn);</span><br><span class="line">	&#125;,</span><br><span class="line">	trigger: function()&#123;</span><br><span class="line">		var key = Array.prototype.shift.call(arguments),</span><br><span class="line">			fns = this.clientList[key];</span><br><span class="line"></span><br><span class="line">		if(!fns || fns.length == 0)&#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		for(var i=0, fn; fn=fns[i++];)&#123;</span><br><span class="line">			fn.apply(this, arguments);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">var installEvent = function(obj)&#123;</span><br><span class="line">	for(var i in event)&#123;</span><br><span class="line">		obj[i] = event[i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line">var salesOffices = &#123;&#125;;</span><br><span class="line">installEvent(salesOffices);</span><br><span class="line"></span><br><span class="line">salesOffices.listen(&apos;squareMeter88&apos;, function( price )&#123;</span><br><span class="line">	console.log(&apos;价格= &apos; + price);</span><br><span class="line">&#125;);</span><br><span class="line">salesOffices.listen(&quot;squareMeter110&quot;, function(price)&#123;</span><br><span class="line">	console.log(&apos;价格= &apos; + price);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">salesOffices.trigger(&apos;squareMeter88&apos;, 2000000);</span><br><span class="line">salesOffices.trigger(&apos;squareMeter88&apos;, 3000000);</span><br></pre></td></tr></table></figure>
+<p>以上代码,把事件的列表放在clientList数组中，listen方法是通过键值对的方式，key为事件，value为事件需要调用的方法，把他们放进数组，trigger是通过遍历数组去找到监听的事件A，然后通过遍历其value去触发对应的方法.<br>clientList的结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">clientList:[</span><br><span class="line">    &#123;</span><br><span class="line">        squareMeter88: [</span><br><span class="line">            fn1,fn2,fn3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">    &#123;</span><br><span class="line">        squareMeter100: [</span><br><span class="line">            fn1,fn2,fn3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">    &#123;</span><br><span class="line">        要监听的事件: [</span><br><span class="line">            要触发的方法1,要触发的方法2,要触发的方法3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>完</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/07/19/设计模式学习之二-—-迭代器模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1359,270 +1647,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/02/13/svg实现动画效果/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/13/svg实现动画效果/" itemprop="url">svg实现动画效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-13T09:54:21+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/13/svg实现动画效果/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/02/13/svg实现动画效果/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>web动画除了css3的帧动画外，还可以用svg来实现动画效果，例如网上的一个例子<a href="http://www.html5tricks.com/demo/html5-svg-fox-run-animation/index.html" target="_blank" rel="noopener">参考链接</a>,这个动画就是用svg的<code>animate</code>标签来实现的，同样是通过软件绘制好图形，path标签中，d属性表示路径点坐标，然后使用animate标签来切换路径，animate标签是path标签的子级，使用 <code>attributeName=“d”</code>表示切换父标签path的d属性，然后<code>values</code>属性则等于要切换的另一个路径图形，多个图形可以使用分号”;”来区分，例如一个丑陋的图形变化<a href="http://ol5kv623u.bkt.clouddn.com/ceshi3.html" target="_blank" rel="noopener">参考链接</a><br>参考信息：<a href="http://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/" target="_blank" rel="noopener">http://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/02/13/SVG绘制动态路径效果/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/13/SVG绘制动态路径效果/" itemprop="url">SVG绘制动态路径效果</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-13T09:17:36+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/13/SVG绘制动态路径效果/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/02/13/SVG绘制动态路径效果/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>svg动态绘制路径效果，使用snap.js库，近适用于path标签。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/13/SVG绘制动态路径效果/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1673,7 +1697,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

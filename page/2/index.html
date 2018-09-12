@@ -243,6 +243,298 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2018/01/21/gulp 构建总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/21/gulp 构建总结/" itemprop="url">gulp 构建总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T21:43:45+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/21/gulp 构建总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/01/21/gulp 构建总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>本文记录下自己使用gulp构建的配置。</p>
+<blockquote>
+<p>代码配置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require( &apos;gulp&apos; );</span><br><span class="line">var htmlmin = require( &quot;gulp-htmlmin&quot; );</span><br><span class="line">var uglify = require( &apos;gulp-uglify&apos; );</span><br><span class="line">var livereload = require( &apos;gulp-livereload&apos; );</span><br><span class="line">var babel = require( &apos;gulp-babel&apos; );</span><br><span class="line">var browserify = require( &apos;browserify&apos; );</span><br><span class="line">var source = require( &apos;vinyl-source-stream&apos; );</span><br><span class="line">var postcss = require( &apos;gulp-postcss&apos; );</span><br><span class="line">var autoprefixer = require( &apos;autoprefixer&apos; );</span><br><span class="line">var cssnano = require( &apos;cssnano&apos; );</span><br><span class="line">var less = require( &apos;gulp-less&apos; );</span><br><span class="line"></span><br><span class="line">//  压缩HTML</span><br><span class="line">gulp.task( &apos;minify-html&apos;, function () &#123;</span><br><span class="line"></span><br><span class="line">  var options = &#123;</span><br><span class="line">    removeComments: true,  //清除HTML注释</span><br><span class="line">    collapseWhitespace: true,  //压缩HTML</span><br><span class="line">    collapseBooleanAttributes: true,  //省略布尔属性的值 &lt;input checked=&quot;true&quot;/&gt; ==&gt; &lt;input checked /&gt;</span><br><span class="line">    removeEmptyAttributes: true,  //删除所有空格作属性值 &lt;input id=&quot;&quot; /&gt; ==&gt; &lt;input /&gt;</span><br><span class="line">    removeScriptTypeAttributes: true,  //删除&lt;script&gt;的type=&quot;text/javascript&quot;</span><br><span class="line">    removeStyleLinkTypeAttributes: true,  //删除&lt;style&gt;和&lt;link&gt;的type=&quot;text/css&quot;</span><br><span class="line">    minifyJS: true,  //压缩页面JS</span><br><span class="line">    minifyCSS: true  //压缩页面CSS</span><br><span class="line">  &#125;;</span><br><span class="line">  gulp.src( &apos;*.html&apos; )</span><br><span class="line">    .pipe( htmlmin( options ) )</span><br><span class="line">    .pipe( gulp.dest( &apos;dist&apos; ) )</span><br><span class="line">    .pipe( livereload() );</span><br><span class="line"></span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">//  把图片放到dist中</span><br><span class="line">gulp.task( &apos;img&apos;, function () &#123;</span><br><span class="line">  return gulp.src( &apos;img/*&apos; )</span><br><span class="line">    .pipe( gulp.dest( &quot;dist/img&quot; ) );</span><br><span class="line">&#125; )</span><br><span class="line"></span><br><span class="line">//  给css使用自动加前缀插件，并压缩css，插件来源于postcss</span><br><span class="line">gulp.task( &apos;css&apos;, function () &#123;</span><br><span class="line">  var plugins = [</span><br><span class="line">    autoprefixer( &#123; browsers: [ &apos;last 2 version&apos;, &apos;&gt; 0.1%&apos; ] &#125; ),</span><br><span class="line">    cssnano()</span><br><span class="line">  ];</span><br><span class="line"></span><br><span class="line">  return gulp.src( &apos;style/*&apos; )</span><br><span class="line">    .pipe( less() )</span><br><span class="line">    .pipe( postcss( plugins ) )</span><br><span class="line">    .pipe( gulp.dest( &apos;dist/style&apos; ) );</span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">//  给js使用babel,并压缩</span><br><span class="line">gulp.task( &apos;script&apos;, function () &#123;</span><br><span class="line">  gulp.src( &apos;js/*.js&apos; )</span><br><span class="line">    .pipe( babel( &#123;</span><br><span class="line">      presets: [ &apos;env&apos; ]</span><br><span class="line">    &#125; ) )</span><br><span class="line">    .pipe( uglify() )</span><br><span class="line">    .pipe( gulp.dest( &apos;dist/js&apos; ) )</span><br><span class="line">    .pipe( livereload() );</span><br><span class="line">&#125; )</span><br><span class="line"></span><br><span class="line">// browserify预编译，打包js</span><br><span class="line">gulp.task( &quot;browserify&quot;, function () &#123;</span><br><span class="line">  var b = browserify( &#123;</span><br><span class="line">    entries: &quot;./dist/js/main.js&quot;</span><br><span class="line">  &#125; );</span><br><span class="line"></span><br><span class="line">  return b.bundle()</span><br><span class="line">    .pipe( source( &quot;bundle.js&quot; ) )</span><br><span class="line">    .pipe( gulp.dest( &quot;dist/js&quot; ) );</span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">//  监听代码热更新并重新执行任务</span><br><span class="line">gulp.task( &apos;watch&apos;, function () &#123;</span><br><span class="line">  livereload.listen(&#123;port: 12345&#125;);</span><br><span class="line">  gulp.watch( &apos;style/*&apos;, [ &apos;css&apos; ] );</span><br><span class="line">  gulp.watch( &apos;wxphp/*&apos;, [ &apos;wxphp&apos; ] );</span><br><span class="line">  gulp.watch( &apos;wxshare/*&apos;, [ &apos;wxshare&apos; ] );</span><br><span class="line">  gulp.watch( &apos;js/*&apos;, [ &apos;script&apos;, &apos;browserify&apos; ] );</span><br><span class="line">  gulp.watch( &apos;index.html&apos;, [ &apos;minify-html&apos; ] );</span><br><span class="line">  gulp.watch( &apos;cj.html&apos;, [ &apos;cj&apos; ] );</span><br><span class="line">&#125; )</span><br><span class="line"></span><br><span class="line">gulp.task( &apos;default&apos;, [ &apos;css&apos;, &apos;script&apos;, &apos;minify-html&apos;, &apos;img&apos;, &apos;browserify&apos;, &apos;watch&apos; ] );</span><br></pre></td></tr></table></figure>
+<p>（完）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2018/01/21/npm 编写发布vue插件记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/21/npm 编写发布vue插件记录/" itemprop="url">npm 编写发布vue插件记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T21:42:45+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/21/npm 编写发布vue插件记录/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/01/21/npm 编写发布vue插件记录/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>本文记录自己学习npm编写vue插件，并导出包文件，发布到npm平台，供其他地方全局调用。</p>
+<blockquote>
+<p>过程记录</p>
+</blockquote>
+<p>首先使用vue-cli脚手架下载一个简版的vue框架<code>webpack-simple</code>,然后在src文件中新建lib文件夹用来存放插件代码，在lib中新建index.js和index.vue，在index.vue中写一个按钮，表示是我们的插件</p>
+<p>index.vue代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;button&quot;&gt;</span><br><span class="line">    &lt;button @click=&quot;handler&quot;&gt;这是一个按钮&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;application/ecmascript&quot;&gt;</span><br><span class="line">    export default &#123;</span><br><span class="line">      name: &apos;test-button&apos;,</span><br><span class="line">      data() &#123;</span><br><span class="line">        return &#123;&#125;;</span><br><span class="line">      &#125;,</span><br><span class="line">      methods: &#123;</span><br><span class="line">        handler() &#123;</span><br><span class="line">          console.log( &apos;点击按钮&apos; );</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style type=&quot;text/less&quot; lang=&quot;less&quot; scoped&gt;</span><br><span class="line">  .button &#123;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 20px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    margin: 0 auto;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在index.js中将组件模块化，并导出组件</p>
+<p>index.js代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import Index from &apos;./index.vue&apos;;</span><br><span class="line"></span><br><span class="line">const button = &#123;</span><br><span class="line"></span><br><span class="line">  //通过vue提供的install方法来将组件注册到vue全局中。</span><br><span class="line">  install( Vue ) &#123;</span><br><span class="line">    Vue.component( Index.name, Index );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ( typeof window !== &apos;undefined&apos; &amp;&amp; window.Vue ) &#123;</span><br><span class="line">  window.Vue.use( Index );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//  将组件导出</span><br><span class="line">export default button;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>打包发布</p>
+</blockquote>
+<p>插件已经编写完毕，我们只需要访问index.js文件就能使用该组件，接下来就是通过webpack将组件代码打包，在项目根目录新建一个webpack-library.js文件来编写webpack打包组件的配置，里面的配置跟webpack.config.js大致相同，但是需要修改文件打包入口出口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//  webpack.config.js的入口是main.js文件，表示是整个项目的入口，但是我们这里只是要打包按钮组件，所以入口要改为lib下的index.js文件</span><br><span class="line">entry: &apos;./src/lib/index.js&apos;,</span><br><span class="line">output: &#123;</span><br><span class="line">path: path.resolve(__dirname, &apos;./dist&apos;),</span><br><span class="line">publicPath: &apos;/dist/&apos;,</span><br><span class="line">//  为了将组件打包出来的文件区分出来，我们要重命名打包后的js文件名</span><br><span class="line">filename: &apos;test-button.js&apos;,</span><br><span class="line">//  插件的名字</span><br><span class="line">library: &quot;TestButton&quot;,</span><br><span class="line">//  不懂，反正写&apos;umd&apos;就是了</span><br><span class="line">libraryTarget: &quot;umd&quot;,</span><br><span class="line">umdNamedDefine: true</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>接下来是package.json的配置：<br>声明一个包文件入口，表示别人下载了组件后，使用时的入口文件，其实就是上面配置后，生成的文件地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;main&quot;: &quot;./dist/test-button.js&quot;,</span><br></pre></td></tr></table></figure>
+<p>新建一个npm命令用来打包组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    ···</span><br><span class="line">    &quot;publish&quot;: &quot;webpack --config webpack-library.js&quot;</span><br><span class="line">    ···</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>然后运行<code>npm run publish</code>开始打包，再运行<code>npm publish</code>发布npm包，发布成功后，我们就可以在npm上看到自己写的包了，使用时，就运行<code>npm install vue-plugin</code>,然后在vue项目中引入，注册：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import TestButton from &apos;vue-plugin&apos;;</span><br><span class="line">Vue.use( TestButton );</span><br></pre></td></tr></table></figure>
+<p>使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;test-button&gt;&lt;/test-button&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在项目中就可以看到自己编写的组件了。</p>
+<p>(完)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/12/31/vue 采坑总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1391,294 +1683,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/08/20/反馈页面项目总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/20/反馈页面项目总结/" itemprop="url">反馈页面项目总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-20T19:40:02+08:00">
-                2017-08-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/08/20/反馈页面项目总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/08/20/反馈页面项目总结/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>项目背景</p>
-</blockquote>
-<p>这个页面是用vue构建，用来内嵌APP中进行用户反馈交互，反馈页面是一个web聊天记录页面，也可以编辑内容上传图片发送对话。</p>
-<blockquote>
-<p>踩到的坑</p>
-</blockquote>
-<p>1、每一条对话数据需要显示数据时间，连续一分钟内的几条对话数据只显示第一条对话的时间。通过v-for循环列出数据时间，每一条循环通过index去判断当前item与index-1的item的时间差，但是第一条会报错，因为取不到第0条的数据。<br>解决方案：因为vue数据绑定属性只能写变量，不能写语句，所以就无法在标签中去判断是否是第一条数据。就算是用二元操作符也无法识别，所以用<code>(dialogItems[index-1] &amp;&amp; dialogItems[index-1].createDate) || 0)</code>就可以筛选出第一条，并把他的上一条设为<code>0</code>.</p>
-<p>2、后端返回的时间格式是<code>2017-10-10 13:30:00</code>的格式，所以用<code>Date.parse()</code>来转化成时间戳进行比较，但是在手机端无法识别<code>-</code>格式的时间，所以<code>Date.parse()</code>无效，需要用<code>.replace(/-/g,&#39;/&#39;)</code>来转化成<code>/</code>格式，再用<code>Date.parse()</code></p>
-<p>3、对话页面需要一进入就把页面拉到最底部来显示最新对话，可以用<code>scrollTo(0,列表高度)</code>来让页面滚动到底部。</p>
-<p>4、输入页面的输入框<code>textarea</code>需要根据输入文本高度增加而增加，可以用vue的input事件来监听textarea的<code>scrollHeight</code>,使他的高度等于scrollHeight即可动态变高。</p>
-<p>5、编辑页面上传图片需要有删除功能，但是当点击删除时，src数据绑定的变量清空后，src并没有清空，需要再把src设为一个字符串，这样页面上的图片便可删除，也可以用vue的<code>$nextTick</code>的回调方法来清空。</p>
-<p>6、上传图片使用formData来提交，但是一直提交不过去，后来得知，是项目有axios的config配置，把上传的内容给序列化了，在axios中设置<code>header:multipart/form-data</code>,然后在config中去匹配该header使其不序列化即可。</p>
-<p>7、在对话列表页点击编辑需要跳转到反馈编辑页面并自动弹出手机软键盘，使用focus()方法可以弹出。但是需要在对话列表页点击按钮才弹出，直接进入编辑页面并不会弹出。猜测是手机监测用户交互行为所设的屏障。</p>
-<p>8、上传完照片后，有个替换功能，可以重新选择照片，就是点击替换按钮去触发input事件，这里有的<code>mouseEvent</code>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const evt = new MouseEvent( &apos;click&apos;, &#123; bubbles: false, cancelable: true, view: window &#125; );</span><br><span class="line">this.$refs.fileBtn.dispatchEvent( evt );</span><br></pre></td></tr></table></figure>
-<p>这样就可以触发<code>input file</code>的点击事件</p>
-<p>（完）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/07/19/设计模式学习之三-—-观察者模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/设计模式学习之三-—-观察者模式/" itemprop="url">设计模式学习之三 — 观察者模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T20:45:09+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/19/设计模式学习之三-—-观察者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/07/19/设计模式学习之三-—-观察者模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>观察者模式介绍</p>
-</blockquote>
-<p>又叫发布-订阅模式，是js事件模式中常见的一种，比如jquery的点击事件，在我们声明点击事件后，当我们用<code>trigger</code>方法去触发<code>click</code>事件时，事件会被响应，这就是一种监听者模式，</p>
-<blockquote>
-<p>观察者模式应用场景</p>
-</blockquote>
-<p>某一件事中，我们声明了一个事件A，然后想监听A方法的触发。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">var event = &#123;</span><br><span class="line">	clientList: [],</span><br><span class="line">	listen: function(key, fn)&#123;</span><br><span class="line">		if( !this.clientList[key] )&#123;</span><br><span class="line">			this.clientList[key] = [];</span><br><span class="line">		&#125;</span><br><span class="line">		this.clientList[key].push(fn);</span><br><span class="line">	&#125;,</span><br><span class="line">	trigger: function()&#123;</span><br><span class="line">		var key = Array.prototype.shift.call(arguments),</span><br><span class="line">			fns = this.clientList[key];</span><br><span class="line"></span><br><span class="line">		if(!fns || fns.length == 0)&#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		for(var i=0, fn; fn=fns[i++];)&#123;</span><br><span class="line">			fn.apply(this, arguments);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">var installEvent = function(obj)&#123;</span><br><span class="line">	for(var i in event)&#123;</span><br><span class="line">		obj[i] = event[i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;; </span><br><span class="line"></span><br><span class="line">var salesOffices = &#123;&#125;;</span><br><span class="line">installEvent(salesOffices);</span><br><span class="line"></span><br><span class="line">salesOffices.listen(&apos;squareMeter88&apos;, function( price )&#123;</span><br><span class="line">	console.log(&apos;价格= &apos; + price);</span><br><span class="line">&#125;);</span><br><span class="line">salesOffices.listen(&quot;squareMeter110&quot;, function(price)&#123;</span><br><span class="line">	console.log(&apos;价格= &apos; + price);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">salesOffices.trigger(&apos;squareMeter88&apos;, 2000000);</span><br><span class="line">salesOffices.trigger(&apos;squareMeter88&apos;, 3000000);</span><br></pre></td></tr></table></figure>
-<p>以上代码,把事件的列表放在clientList数组中，listen方法是通过键值对的方式，key为事件，value为事件需要调用的方法，把他们放进数组，trigger是通过遍历数组去找到监听的事件A，然后通过遍历其value去触发对应的方法.<br>clientList的结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">clientList:[</span><br><span class="line">    &#123;</span><br><span class="line">        squareMeter88: [</span><br><span class="line">            fn1,fn2,fn3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">    &#123;</span><br><span class="line">        squareMeter100: [</span><br><span class="line">            fn1,fn2,fn3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">    &#123;</span><br><span class="line">        要监听的事件: [</span><br><span class="line">            要触发的方法1,要触发的方法2,要触发的方法3，...</span><br><span class="line">        ]</span><br><span class="line">    &#125;，</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>完</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1729,7 +1733,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
