@@ -243,6 +243,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2018/02/21/h5小游戏分享/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/21/h5小游戏分享/" itemprop="url">H5小游戏分享</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T15:11:45+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/21/h5小游戏分享/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/02/21/h5小游戏分享/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>本文记录自己在公司内部前端组关于h5小游戏的分享。</p>
+<blockquote>
+<p>特点</p>
+</blockquote>
+<p>轻量，简单，基于js+canvas</p>
+<blockquote>
+<p>1.页面适配布局</p>
+</blockquote>
+<p>由于各个小游戏框架库都是基于canvas,当中的元素坐标基于px,所以rem方案不适用，而是按照640的屏幕去写页面，然后再等比缩放，这样其中的元素该位移多少还是位移多少，不同屏幕下，他的位移值是一样的， 只不过视觉上经过放大缩小后，就适配了布局。</p>
+<p>a.<br>横屏或竖屏布局后，当监测到用户手机为非期望屏幕方向时，弹层提示。</p>
+<p>b.<br>写2套css,分别为元素横屏和竖屏布局，然后屏幕旋转时，暂停游戏，切换布局，再把当前数据套进去。</p>
+<blockquote>
+<p>2.js游戏引擎</p>
+</blockquote>
+<p>a.<br>createjs，pixijs，phaser<br>2D,支持canvas，webGL</p>
+<p>createjs，pixijs两个元素结构 stage-container-sprite</p>
+<p>b.<br>egret,LayaAir,cocos2D-js,three.js<br>2D,3D等中大型游戏</p>
+<p>3.工具<br>制作雪碧图-texturePckageGUI<br>生成雪碧图+json,json中包含各个图的位置信息</p>
+<p>骨骼动画-dragonbonesPro</p>
+<p>4.碰撞检测<br><a href="https://aotu.io/notes/2017/02/16/2d-collision-detection/" target="_blank" rel="noopener">https://aotu.io/notes/2017/02/16/2d-collision-detection/</a></p>
+<p>5.源码网<br><a href="http://www.codefans.net/jscss/sort/list_7_1.shtml" target="_blank" rel="noopener">http://www.codefans.net/jscss/sort/list_7_1.shtml</a></p>
+<p>（完）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2018/01/21/gulp 构建总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1536,158 +1690,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/2017/09/03/nginx反向代理和负载均衡配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/03/nginx反向代理和负载均衡配置/" itemprop="url">nginx反向代理和负载均衡配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-03T14:44:30+08:00">
-                2017-09-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/09/03/nginx反向代理和负载均衡配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/09/03/nginx反向代理和负载均衡配置/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>nginx介绍</p>
-</blockquote>
-<p>nginx作为静态服务器，只能解析静态文件，像php文件就属于动态文件，所以无法打开php文件，因为nginx要想解析php文件，须配合php-fpm使用，nginx当需要解析php文件的时候就会把解析任务交给php-fpm服务，php-fpm再把解析结果返给nginx,最终返回给用户。最近研究了下nginx，使用它的反向代理和负载均衡来解决一些常见问题，下面记录一下。</p>
-<blockquote>
-<p>反向代理</p>
-</blockquote>
-<p>现在越来越多的前后端分离已经不只是代码上的分离，就连服务器也各自使用，所以前后端通信就会有跨域的现象出现，以往解决跨域就是使用jsonp，但是目前越来越多的人使用nginx反向代理，即前端请求不直接发给后端，而是发到nginx服务器上，nginx再根据你的配置进行转发，由nginx来访问后端地址，相当于是一个中介。下面是配置示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">&#123;</span><br><span class="line">    #监听端口</span><br><span class="line">    listen 81;</span><br><span class="line">    </span><br><span class="line">    #域名</span><br><span class="line">    server_name 120.27.104.77;</span><br><span class="line"></span><br><span class="line">    index index.html index.htm index.php;</span><br><span class="line">    </span><br><span class="line">    #站点目录</span><br><span class="line">    root /home/nginx;</span><br><span class="line">    </span><br><span class="line">    location /three/</span><br><span class="line">    &#123;</span><br><span class="line">        proxy_pass http://120.27.104.77:80/three/;</span><br><span class="line">        index index.html index.php;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_buffer_size 64k;</span><br><span class="line">        proxy_buffers   32 32k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        proxy_set_header X-Real-IP       $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;</span><br><span class="line">        access_log on;</span><br><span class="line">        access_log /usr/local/webserver/nginx/logs/www_access.log main;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~* \.php$</span><br><span class="line">    &#123;</span><br><span class="line">        root /home/sam;</span><br><span class="line">        try_files $uri =404;</span><br><span class="line">        fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">        fastcgi_index index.php;</span><br><span class="line">        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">        include fastcgi.conf;</span><br><span class="line">        access_log on;</span><br><span class="line">        access_log /usr/local/webserver/nginx/logs/www_phpproxy_access.log main;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的配置表示nginx监听81端口，我自己把80端口分给了apache，当访问81端口下的/three目录下的静态文件时，nginx把请求转给80端口下的three文件，其实81端口下是没有任何文件的，nginx只是起到了转发请求的作用。location匹配php文件，当访问的是php文件，就把这个文件请求转到home/sam文件夹下，home/sam是apache的根目录，这样，nginx就把php请求转给了apache。最终，当访问<a href="http://120.27.104.77:81/three/index.php,nginx就把请求转给http://120.27.104.77:80/three/index.php，代理完成。" target="_blank" rel="noopener">http://120.27.104.77:81/three/index.php,nginx就把请求转给http://120.27.104.77:80/three/index.php，代理完成。</a></p>
-<blockquote>
-<p>负载均衡</p>
-</blockquote>
-<p>负载均衡指的是当一个服务器上的项目有很多用户时，服务器压力增大，需要其他服务器来帮忙分担请求，但是用户输入的网址不能变，所以，就应用到了nginx的负载均衡，负载均衡还是通过反向代理的方式，把请求转发给其他服务器，但是需要每一台服务器上的文件同步。下面是配置示例：</p>
-<p>在http模块下添加负载均衡配置（默认使用的是轮询方式，weight表示是权重，下面表示82端口和80端口请求次数是1:1）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">upstream myserver &#123;</span><br><span class="line">    server 120.27.104.77:82 weight=1;</span><br><span class="line">    server 120.27.104.77:80 weight=1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server模块下添加location规则：</span><br><span class="line"></span><br><span class="line">location ~*test.php &#123;</span><br><span class="line">    proxy_pass http://myserver;</span><br><span class="line">    proxy_redirect off;</span><br><span class="line">    proxy_set_header Host $host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>80端口依然是apache，82端口是nginx服务器，当我访问81端口下的test.php，nginx就把请求转给82端口，再次刷新就把请求转给80端口，依次反复，这样就实现了负载均衡，相当于是有两台服务器在支撑。多设几个就有多个服务器支撑。</p>
-<p>（完）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1733,7 +1740,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
