@@ -243,6 +243,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/blog/2017/12/10/手机端编辑器总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/2017/12/10/手机端编辑器总结/" itemprop="url">手机端编辑器总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T20:26:45+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2017/12/10/手机端编辑器总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2017/12/10/手机端编辑器总结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>由于公司业务是做书籍阅读类的。所以产品提出要在webapp的发帖页面中，能输入文本，插入图片，和插入书籍。</p>
+<blockquote>
+<p>采坑过程</p>
+</blockquote>
+<p>本来手机端做编辑器可以用现成的插件，文本和图片都是比较容易解决。但是为了插入书籍，只有自己来做这个功能。</p>
+<blockquote>
+<p>坑 One</p>
+</blockquote>
+<p>输入框用div的<code>contenteditable</code>属性来做，但是在输入框中输入enter键换行时，换行的文本无法获得焦点，是因为换行时会自动生成div,但生成的div并没有<code>contenteditable</code>属性，于是就监听enter键事件，阻止默认事件，动态重新创建<code>contenteditable</code>的div。</p>
+<blockquote>
+<p>坑 Two</p>
+</blockquote>
+<p>删除时，删到开头，要把光标移到上一个文本div。需要监听<code>delete</code>键，手动去删除空白的div,再把光标移动到上一个文本的末尾。iphone端表现良好，但是安卓端无法监听到delete键，所以就意识到用div还是不可行的。</p>
+<p>于是，还是要尝试用原生的textarea，插入文本就是插入textarea,插入图片和书籍就是在文本节点下面插入图片和书籍节点，但在图片和书籍节点后面要再插入个空白的textarea可以让其继续输入。</p>
+<p>但是textarea的缺点在于无法动态改变他的高度，但是在网上找到个方案，核心代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;expandingArea&quot; data-type=&quot;textarea&quot;&gt;</span><br><span class="line">    &lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;</span><br><span class="line">    &lt;textarea data-type=&quot;text&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>每一个创建的textarea标签都需要这样包裹一下，为的是让其可以自适应高度。</p>
+<p>以上代码在输入textarea时，监听input事件，把textarea的value复制给span标签，expandingArea用相对定位，expandingArea的高度由span标签撑开，span的高度可以跟随文本变化，span的文本又是跟textarea保持一致。这样便可以实现textarea的高度自适应了。但是要注意一点：<code>textarea和pre里的字体样式必须保持一致</code></p>
+<p>css代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">.expandingArea &#123;</span><br><span class="line">    position: relative;</span><br><span class="line"></span><br><span class="line">    /*textarea和pre里的字体样式必须保持一致*/</span><br><span class="line">    textarea,</span><br><span class="line">    pre &#123;</span><br><span class="line">        margin: 0;</span><br><span class="line">        padding: 0;</span><br><span class="line">        outline: 0;</span><br><span class="line">        border: 0;</span><br><span class="line">        font-size: 15px;</span><br><span class="line">        line-height: 17px;</span><br><span class="line">        min-height: 15px;</span><br><span class="line">        color: #474e58;</span><br><span class="line">        width: 100%;</span><br><span class="line">        white-space: pre-wrap;</span><br><span class="line">        word-wrap: break-word;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    textarea &#123;</span><br><span class="line">        position: absolute;</span><br><span class="line">        top: 0;</span><br><span class="line">        left: 0;</span><br><span class="line">        height: 100%;</span><br><span class="line">        resize: none;</span><br><span class="line">        overflow: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">    pre &#123;</span><br><span class="line">        display: block;</span><br><span class="line">        visibility: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>插入书籍时，拿到书籍的json然后生成一个div放置在文本div下面，并在书籍div后生成一个新的空白文本div,这样就可以继续在书籍下面输入文本，当删除文本时，假如删到开头，就把当前文本的value附加给上一个文本div,再删除当前的文本节点。这样整个需求算是完成了。</p>
+<p>(完)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/blog/2017/10/22/设计模式学习之五-状态模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1498,186 +1652,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/blog/2017/04/19/从输入URL，到页面显示，这中间都发生了什么？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="三木">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="三木">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/2017/04/19/从输入URL，到页面显示，这中间都发生了什么？/" itemprop="url">从输入URL，到页面显示，这中间都发生了什么？</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T11:16:44+08:00">
-                2017-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/blog/2017/04/19/从输入URL，到页面显示，这中间都发生了什么？/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2017/04/19/从输入URL，到页面显示，这中间都发生了什么？/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>引言</p>
-</blockquote>
-<p>“从输入URL，到页面显示，这中间都发生了什么？”，常刷知乎的肯定都知道这在知乎上是一道经典题，把自己能理解的部分做个记录：</p>
-<hr>
-<blockquote>
-<p>过程简述</p>
-</blockquote>
-<ol>
-<li>浏览器通过域名查找对应IP；</li>
-<li>浏览器通过IP地址与服务器建立链接；</li>
-<li>浏览器与服务器通信：浏览器发送请求，服务器处理请求；</li>
-<li>浏览器与服务器断开链接；</li>
-<li>页面渲染；</li>
-</ol>
-<h2 id="下面就针对以上5条进行简单介绍"><a href="#下面就针对以上5条进行简单介绍" class="headerlink" title="下面就针对以上5条进行简单介绍"></a>下面就针对以上5条进行简单介绍</h2><blockquote>
-<p>1.浏览器通过域名查找对应IP:</p>
-</blockquote>
-<p>URL的基本结构: 协议名称 :// 服务器所在域名或者IP地址 : 端口号 / 所要访问的文件路径</p>
-<p>PS:浏览器为了保证安全性,设定了跨域保护策略, 即窗口之间的通信必须满足使用相同协议, 相同域名, 相同端口,因此深入理解URL各组成部分的含义有助于我们判断两个窗口之间是否能互相通信。</p>
-<p>以<a href="http://www.baidu.com/index.html为例，" target="_blank" rel="noopener">http://www.baidu.com/index.html为例，</a></p>
-<p><code>http</code>表示超文本传输协议</p>
-<p><code>www.baidu.com</code>是域名，由于IP协议规定的纯数字难以记忆，所以就用域名来代替便于记忆理解，百度实际的IP地址为119.75.217.109。就像每个人都有身份证号，身份证号是唯一的，但我们不能听过身份证号来跟别人交流，所以就叫别人的名字。在这里，身份证号就是IP，域名就是人的姓名。</p>
-<p><code>DNS</code>服务器之间的访问定位还是通过IP来定位的，但是我们输入的是域名，那么就产生了DNS协议，它的作用就是把域名转化为IP，提供该协议服务的服务器就叫DNS服务器。</p>
-<p><code>index.html</code>就是我们所要访问的文件名</p>
-<blockquote>
-<p>2.浏览器通过IP地址与服务器建立链接；</p>
-</blockquote>
-<p>解析出了服务器的IP地址，浏览器就与服务器建立连接了。连接过程就是俗称的TCP协议“三次握手”：</p>
-<p>1.主机向服务器发送一个建立连接的请求（您好，我想认识您）；</p>
-<p>2.服务器接到请求后发送同意连接的信号（好的，很高兴认识您）；</p>
-<p>3.主机接到同意连接的信号后，再次向服务器发送了确认信号（我也很高兴认识您），自此，主机与服务器两者建立了连接。</p>
-<blockquote>
-<p>3.浏览器与服务器通信</p>
-</blockquote>
-<p>建立连接后，主机与服务器就开始进行通信。</p>
-<p>1.浏览器根据URL生成HTTP请求，请求中包含请求头和请求体。</p>
-<p>2.服务器接收到请求后，根据请求的内容，将相对应的文件发送给浏览器。</p>
-<blockquote>
-<p>4.浏览器与服务器断开链接</p>
-</blockquote>
-<p>发送完毕后，主机与浏览器断开连接，断开连接过程是一个“四次挥手”的过程，当服务器接收到断开连接的请求时，可能仍然有数据未发送完毕，所以服务器先发送确认信号，等数据全部发送完毕再同意断开。</p>
-<blockquote>
-<p>5.页面渲染</p>
-</blockquote>
-<p>1.浏览器开始解析HTML文件，按照从上到下的顺序解析。</p>
-<p>2.HTML解析器将HTML转成成DOM，构建完DOM树后，触发DomContentLoaded事件。</p>
-<p>3.CSS解析器将CSS解析为CSSOM（层叠样式表对象模式）</p>
-<p>4.CSSOM和DOM开始合并渲染布局，计算各个节点的位置信息；</p>
-<p>5.布局后的渲染树显示到界面上；</p>
-<p>以上只是自己对整个过程的简单理解，往深了讲，这个题涵盖的知识面太多太广太深。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1728,7 +1702,7 @@
               
                 <a href="/blog/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1778,7 +1752,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
