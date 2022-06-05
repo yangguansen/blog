@@ -79,6 +79,6 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/yangguansen/yangguansen.github.io.git
+  repo: git@github.com:yangguansen/yangguansen.github.io.git
   branch: master
   message: deploy to github success!
