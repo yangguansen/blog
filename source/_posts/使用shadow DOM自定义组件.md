@@ -20,7 +20,7 @@ Shadow DOM被设计为基于组件创建应用的工具，对比其他普通DOM�
 - 在页面上如何创建和使用DOM。
 - 在页面上其他地方它是如何工作的。
 
-通常情况下，你创建DOM节点，然后把它作为子元素添加到另一个元素中， 在shadow DOM中，你创建一个有作用域的DOM树，然后添加到其他子元素中，这个DMO树就称为`shadow tree`。包含这个tree的元素就称为`shadow host`。你添加到shadow tree中的任何元素，都是在host中的，包括<style>标签，这就是shadow DOM如何实现CSS样式作用域的。
+通常情况下，你创建DOM节点，然后把它作为子元素添加到另一个元素中， 在shadow DOM中，你创建一个有作用域的DOM树，然后添加到其他子元素中，这个DMO树就称为`shadow tree`。包含这个tree的元素就称为`shadow host`。你添加到shadow tree中的任何元素，都是在host中的，包括`<style>`标签，这就是shadow DOM如何实现CSS样式作用域的。
 
 #### 创建Shadow DOM
 
