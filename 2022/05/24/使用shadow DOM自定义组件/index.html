@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在这篇文章中，我们主要介绍Shadow DOM。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用shadow DOM自定义组件">
+<meta property="og:url" content="https://blog.91sam.com/2022/05/24/使用shadow DOM自定义组件/index.html">
+<meta property="og:site_name" content="三木">
+<meta property="og:description" content="在这篇文章中，我们主要介绍Shadow DOM。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-06-05T02:26:54.278Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用shadow DOM自定义组件">
+<meta name="twitter:description" content="在这篇文章中，我们主要介绍Shadow DOM。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blog.91sam.com/2022/05/24/使用shadow DOM自定义组件/"/>
+
+
+
+
+
+  <title>使用shadow DOM自定义组件 | 三木</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三木</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你是谁就遇到谁</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/blog/2022/05/24/使用shadow DOM自定义组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用shadow DOM自定义组件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-24T12:44:30+08:00">
+                2022-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2022/05/24/使用shadow DOM自定义组件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2022/05/24/使用shadow DOM自定义组件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在这篇文章中，我们主要介绍Shadow DOM。<br><a id="more"></a></p>
+<p>Shadow DOM被设计为基于组件创建应用的工具，对比其他普通DOM，它提供了：</p>
+<ul>
+<li><p><b>隔离性</b>：在shadow DOM中元素是与普通DOM隔离的，我们使用<code>document.querySelector()</code>将不会返回node节点，同样也不需要担心class/id冲突。</p>
+</li>
+<li><p><b>CSS作用域</b>：在shadow DOM中的CSS只在其内部生效，不会影响页面上的其他样式。</p>
+</li>
+<li><p><b>组装</b>：可以设计一个可声明的，基于标记的组件。</p>
+</li>
+</ul>
+<p>与此同时，Shadow DOM对比普通的DOM还有以下两点不同：</p>
+<ul>
+<li>在页面上如何创建和使用DOM。</li>
+<li>在页面上其他地方它是如何工作的。</li>
+</ul>
+<p>通常情况下，你创建DOM节点，然后把它作为子元素添加到另一个元素中， 在shadow DOM中，你创建一个有作用域的DOM树，然后添加到其他子元素中，这个DMO树就称为<code>shadow tree</code>。包含这个tree的元素就称为<code>shadow host</code>。你添加到shadow tree中的任何元素，都是在host中的，包括<style>标签，这就是shadow DOM如何实现CSS样式作用域的。</p>
+<h4 id="创建Shadow-DOM"><a href="#创建Shadow-DOM" class="headerlink" title="创建Shadow DOM"></a>创建Shadow DOM</h4><p><code>shadow root</code>是document片段的根节点，当创建shadow DOM时，你就得到了一个shadow root，为一个元素创建shadow DOM,使用<code>element.arrachShadow()</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var header = document.createElement(&apos;header&apos;);</span><br><span class="line">var shadowRoot = header.attachShadow(&#123;mode: &apos;open&apos;&#125;);</span><br><span class="line">var paragraphElement = document.createElement(&apos;p&apos;);</span><br><span class="line"></span><br><span class="line">paragraphElement.innerText = &apos;Shadow DOM&apos;;</span><br><span class="line">shadowRoot.appendChild(paragraphElement);</span><br></pre></td></tr></table></figure>
+<h4 id="Shadow-DOM中的组装"><a href="#Shadow-DOM中的组装" class="headerlink" title="Shadow DOM中的组装"></a>Shadow DOM中的组装</h4><p>组装是Shadow DOM中非常重要的一个特性。<br>当写HTML时，你通过拼接不同的元素比如<code>&lt;div&gt;</code> <code>&lt;header&gt;</code> <code>&lt;form&gt;</code>等来实现页面UI，组装成的web应用，这些标签可以相互搭配。</p>
+<p>组装定义了为什么<code>&lt;select&gt;&lt;form&gt;&lt;video&gt;</code>等标签是可扩展的，并且可以接收其他HTML元素作为子元素实现一些特别的功能。</p>
+<p>比如，<code>&lt;select&gt;</code>知道在设置了预选项的下拉框组件中，如何渲染<code>&lt;option&gt;</code>元素。</p>
+<p>Shadow DOM采用以下特性用来实现组装。</p>
+<h4 id="轻量DOM"><a href="#轻量DOM" class="headerlink" title="轻量DOM"></a>轻量DOM</h4><p>这是一个自定义组件的写法，自定义标签中包含真实DOM，想象一下如果你想创建一个组件叫<code>extended-button</code>, 这个组件扩展了原生HTML按钮，并且你想包含一个icon和一些文字，写法大概如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;extended-button&gt;</span><br><span class="line">  &lt;!-- image 和 span 是 extended-button 的轻量 DOM --&gt;</span><br><span class="line">  &lt;img src=&quot;boot.png&quot; slot=&quot;image&quot;&gt;</span><br><span class="line">  &lt;span&gt;Launch&lt;/span&gt;</span><br><span class="line">&lt;/extended-button&gt;</span><br></pre></td></tr></table></figure>
+<p>这个“extended-button”是你定义的自定义组件，其内部的HTML称为轻量DOM。Shadow DOM在这里就是你创建的“extended-button”，它定义了它的内部结构，CSS作用域，并封装了内部实现。</p>
+<h4 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h4><p>当你在web页面上必须重复使用相同的DOM结构时，最好是定义一些模板来实现复用，这在以前也是可能实现的，但是现在可以使用HTML <template>标签更容易实现，这个元素及其内容在DOM中不会被渲染，但是可以在Javascript中被引用。</p>
+<p>看个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template id=&quot;my-paragraph&quot;&gt;</span><br><span class="line">  &lt;p&gt; Paragraph content. &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>这不会在页面上显示，除非你在Javascript中引用它，并把它添加到其他DOM中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var template = document.getElementById(&apos;my-paragraph&apos;);</span><br><span class="line">var templateContent = template.content;</span><br><span class="line">document.body.appendChild(templateContent);</span><br></pre></td></tr></table></figure>
+<p>这在一些框架中可以实现，但是在之前提到的，它更加原生，并且有不错的浏览器兼容性：<br><img src="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653366684-4798-628c5f9c752ad-624325.png&amp;is_redirect=1" alt="s2 (1).png"></p>
+<p>Templates可以和自定义元素搭配，起到更好的效果，我们将自定义元素，此时你应该知道浏览器的<code>customElements</code>API，允许你自定义标签来渲染。</p>
+<p>让我们用templates的内容作为shadow DOM来定义个web component，我们称为<code>my-parrgraph</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">customElements.define(&apos;my-paragraph&apos;,</span><br><span class="line"> class extends HTMLElement &#123;</span><br><span class="line">   constructor() &#123;</span><br><span class="line">     super();</span><br><span class="line"></span><br><span class="line">     let template = document.getElementById(&apos;my-paragraph&apos;);</span><br><span class="line">     let templateContent = template.content;</span><br><span class="line">     const shadowRoot = this.attachShadow(&#123;mode: &apos;open&apos;&#125;).appendChild(templateContent.cloneNode(true));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里的关键点是我们添加了一个template子元素的副本到shadow root中，副本是通过<code>Node.cloneNode()</code>方法创建的。</p>
+<p>同样我们可以添加一些样式到shadow DOM中，我们可以在template中添加<code>&lt;style&gt;</code>标签，它在普通DOM中不会生效。</p>
+<p>例如：我们可以修改我们的template：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template id=&quot;my-paragraph&quot;&gt;</span><br><span class="line">  &lt;style&gt;</span><br><span class="line">    p &#123;</span><br><span class="line">      color: white;</span><br><span class="line">      background-color: #666;</span><br><span class="line">      padding: 5px;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">  &lt;p&gt;Paragraph content. &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>现在我们的自定义元素可以这样使用：<br><code>&lt;my-paragraph&gt;&lt;/my-paragraph&gt;</code></p>
+<h4 id="Slots"><a href="#Slots" class="headerlink" title="Slots"></a>Slots</h4><p>Templates有一些缺点，其中之一是它的静态内容不允许我们渲染我们的动态数据。</p>
+<p>这时，<code>&lt;slot&gt;</code>就派上用场了。</p>
+<p>你可以认为slots是作为占位符，允许你把你自己的HTML放到tempalte中，它允许你创建通用的HTML templates并通过添加slots实现自定义。</p>
+<p>让我们看template和slot如何搭配：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template id=&quot;my-paragraph&quot;&gt;</span><br><span class="line">  &lt;p&gt; </span><br><span class="line">    &lt;slot name=&quot;my-text&quot;&gt;Default text&lt;/slot&gt; </span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>如果元素添加自定义标签时，slot的内容没有定义，或者浏览器不支持slots,<code>&lt;my-paragraph&gt;</code>只会显示它的内容“Default text”。</p>
+<p>为了定义slot的内容，我们应该在<code>&lt;my-paragraph&gt;</code>中包含一个元素，这个元素包含slot属性，并且它的slot值等于我们想要填充的slot的name。</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-paragraph&gt;</span><br><span class="line"> &lt;span slot=&quot;my-text&quot;&gt;Let&apos;s have some different text!&lt;/span&gt;</span><br><span class="line">&lt;/my-paragraph&gt;</span><br></pre></td></tr></table></figure>
+<p>这个例子是我们插入了一个span标签，他有slot属性，slot的值等于my-text的name.</p>
+<p>在被浏览器渲染之后，将会显示为以下DOM树：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-paragraph&gt;</span><br><span class="line">  #shadow-root</span><br><span class="line">  &lt;p&gt;</span><br><span class="line">    &lt;slot name=&quot;my-text&quot;&gt;</span><br><span class="line">      &lt;span slot=&quot;my-text&quot;&gt;Let&apos;s have some different text!&lt;/span&gt;</span><br><span class="line">    &lt;/slot&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">&lt;/my-paragraph&gt;</span><br></pre></td></tr></table></figure>
+<p><code>#shadow-root</code>只是一个shadow DOM存在的指示符</p>
+<h4 id="样式"><a href="#样式" class="headerlink" title="样式"></a>样式</h4><p>shadow DOM的组件样式可以定义在主页面中，也可以自定义在shadow DOM中。</p>
+<h4 id="自定义组件样式"><a href="#自定义组件样式" class="headerlink" title="自定义组件样式"></a>自定义组件样式</h4><p><b>CSS作用域</b>是Shadow DOM的最棒的特性之一。</p>
+<ul>
+<li>外部的CSS选择器无法选中你的组件。</li>
+<li>组件自定义样式不会影响页面其他部位，他们只在host元素中生效，所以不必担心id命名冲突。</li>
+</ul>
+<p>来看个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#shadow-root</span><br><span class="line">&lt;style&gt;</span><br><span class="line">  #container &#123;</span><br><span class="line">    background: white;</span><br><span class="line">  &#125;</span><br><span class="line">  #container-items &#123;</span><br><span class="line">    display: inline-flex;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;div id=&quot;container&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;container-items&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>所有的样式只会在#shadow-root中生效。</p>
+<p>你也可以使用<code>&lt;link&gt;</code>元素来引用样式，也只会在#shadow-root中生效。</p>
+<h4 id="host伪类"><a href="#host伪类" class="headerlink" title=":host伪类"></a>:host伪类</h4><p><code>:host</code>允许你选中shadow tree的根节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  :host &#123;</span><br><span class="line">    display: block; /* 默认自定义元素是 display: inline */</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<p>有一个需要注意点的是外层的:host的优先级高于元素内部的:host，并且:host只在shadow root的作用域中生效。<br><code>:host(选择器)</code>允许你在符合状态时选中host，因此你可以在响应交互状态时使用它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  :host &#123;</span><br><span class="line">    opacity: 0.4;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  :host(:hover) &#123;</span><br><span class="line">    opacity: 1;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  :host([disabled]) &#123; /* style when host has disabled attribute. */</span><br><span class="line">    background: grey;</span><br><span class="line">    pointer-events: none;</span><br><span class="line">    opacity: 0.4;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  :host(.pink) &gt; #tabs &#123;</span><br><span class="line">    color: pink; /* color internal #tabs node when host has class=&quot;pink&quot;. */</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用-host-context伪类匹配主题"><a href="#使用-host-context伪类匹配主题" class="headerlink" title="使用:host-context伪类匹配主题"></a>使用:host-context伪类匹配主题</h4><p><code>:host-context(选择器)</code>伪类能够在匹配（选择器）时，选中元素，通常情况下用来结合主题使用。比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;body class=&quot;lightheme&quot;&gt;</span><br><span class="line">  &lt;custom-container&gt;</span><br><span class="line">  …</span><br><span class="line">  &lt;/custom-container&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>:host-context(.lightheme)</code>能够生效，并渲染样式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:host-context(.lightheme) &#123;</span><br><span class="line">  color: black;</span><br><span class="line">  background: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="从组件外侧添加样式"><a href="#从组件外侧添加样式" class="headerlink" title="从组件外侧添加样式"></a>从组件外侧添加样式</h4><p>你可以从组件的外侧给组件添加样式，比如这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">custom-container &#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><b>外层的样式比shadow DOM中的样式具有更高的优先级。</b></p>
+<p>例如，我们外层给的样式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">custom-container &#123;</span><br><span class="line">  width: 500px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以覆盖组件的样式规则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:host &#123;</span><br><span class="line">  width: 300px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="事件模型"><a href="#事件模型" class="headerlink" title="事件模型"></a>事件模型</h4><p>Shadow DOM的事件冒泡机制比较特别，事件的target都由Shadow DOM封装，即组件内部元素的事件，target都会是Shadow DOM组件本身。<br>以下是Shadow DOM的冒泡事件列表：</p>
+<ul>
+<li>Focus Events: blur, focus, focusin, focusout</li>
+<li>Mouse Events: click, dblclick, mousedown, mouseenter, mousemove, etc.</li>
+<li>Wheel Events: wheel</li>
+<li>Input Events: beforeinput, input</li>
+<li>Keyboard Events: keydown, keyup</li>
+<li>Composition Events: compositionstart, compositionupdate, compositionend</li>
+<li>DragEvent: dragstart, drag, dragend, drop, etc.</li>
+</ul>
+<h4 id="自定义事件"><a href="#自定义事件" class="headerlink" title="自定义事件"></a>自定义事件</h4><p>自定义事件默认不会冒泡到Shadow DOM外层，如果你想捕获自定义事件且想让它冒泡，你需要添加<code>bubbles: true</code>和<code>composed: true</code>作为选项。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var container = this.shadowRoot.querySelector(&apos;#container&apos;);</span><br><span class="line">container.dispatchEvent(new Event(&apos;containerchanged&apos;, &#123;bubbles: true, composed: true&#125;));</span><br></pre></td></tr></table></figure></p>
+<h4 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h4><p>为了检查浏览器是否支持Shadow DOM功能，可以像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const supportsShadowDOM = !!HTMLElement.prototype.attachShadow;</span><br></pre></td></tr></table></figure></p>
+<p>通常情况下，Shadow DOM与普通DOM有一些行为上的差异，我们可以使用SessionStack库来收集用户事件，网络数据，异常捕获，debug信息，把他们发送到服务端，来让我们能够复现问题。</p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>Youtube里大量使用了自定义组件：<br><img src="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653367203-0293-628c61a3072f1-872116.png&amp;is_redirect=1" alt="enter image description here"><br>其是使用了Polymer library来构建自定义组件。<br>后面会输出一篇Polymer library的学习笔记，敬请期待。</p>
+<p>参考文献：</p>
+<ul>
+<li><a href="https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e">https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e</a> </li>
+</ul>
+</style></p>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2022/03/17/webpack依赖树插件开发总结/" rel="next" title="webpack依赖树插件开发总结">
+                <i class="fa fa-chevron-left"></i> webpack依赖树插件开发总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">三木</p>
+              <p class="site-description motion-element" itemprop="description">前端开发,web,javascript,技术博客,程序员</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三木</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4<span class="post-meta-divider">|</span> <a href="http://www.beian.miit.gov.cn/" target="_blank">冀ICP备16017076号</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'oRFF94LDvBxhICSHyFSQ5EUr-gzGzoHsz',
+        appKey: 'bcupnUiSFxoYCfpMMwfcffVE',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

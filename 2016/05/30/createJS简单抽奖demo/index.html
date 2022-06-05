@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="createJS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在学createJS, 就做个抽奖来练手，这个createjs库是google研发的，可以做小游戏引擎和H5小动画，感觉性能不错，语法也容易理解，但是google团队在2015年就停止维护了，不知道为啥，国内网上关于这个的教程挺少的，唯一的一个中文网就是按照官网翻译的，而且翻译的还特别生硬，我最近在墙外发现个日本的网站有这个库的教程，非常不错。也一直苦于不知道做H5小动画用哪个框架比较好，之前">
+<meta name="keywords" content="createJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="createJS简单抽奖demo">
+<meta property="og:url" content="https://blog.91sam.com/2016/05/30/createJS简单抽奖demo/index.html">
+<meta property="og:site_name" content="三木">
+<meta property="og:description" content="最近在学createJS, 就做个抽奖来练手，这个createjs库是google研发的，可以做小游戏引擎和H5小动画，感觉性能不错，语法也容易理解，但是google团队在2015年就停止维护了，不知道为啥，国内网上关于这个的教程挺少的，唯一的一个中文网就是按照官网翻译的，而且翻译的还特别生硬，我最近在墙外发现个日本的网站有这个库的教程，非常不错。也一直苦于不知道做H5小动画用哪个框架比较好，之前">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-06-05T02:34:28.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="createJS简单抽奖demo">
+<meta name="twitter:description" content="最近在学createJS, 就做个抽奖来练手，这个createjs库是google研发的，可以做小游戏引擎和H5小动画，感觉性能不错，语法也容易理解，但是google团队在2015年就停止维护了，不知道为啥，国内网上关于这个的教程挺少的，唯一的一个中文网就是按照官网翻译的，而且翻译的还特别生硬，我最近在墙外发现个日本的网站有这个库的教程，非常不错。也一直苦于不知道做H5小动画用哪个框架比较好，之前">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blog.91sam.com/2016/05/30/createJS简单抽奖demo/"/>
+
+
+
+
+
+  <title>createJS简单抽奖demo | 三木</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三木</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你是谁就遇到谁</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.91sam.com/blog/2016/05/30/createJS简单抽奖demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">createJS简单抽奖demo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-30T15:47:44+08:00">
+                2016-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/2016/05/30/createJS简单抽奖demo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/blog/2016/05/30/createJS简单抽奖demo/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在学createJS, 就做个抽奖来练手，这个createjs库是google研发的，可以做小游戏引擎和H5小动画，感觉性能不错，语法也容易理解，但是google团队在2015年就停止维护了，不知道为啥，国内网上关于这个的教程挺少的，唯一的一个中文网就是按照官网翻译的，而且翻译的还特别生硬，我最近在墙外发现个日本的网站有这个库的教程，非常不错。也一直苦于不知道做H5小动画用哪个框架比较好，之前看过cocos2D，工程量太大了，相比之下，createJS非常的轻便。<br>另外还备注个求区间随机数的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function selectfrom (lowValue,highValue)&#123;</span><br><span class="line">	var choice=highValue-lowValue+1;</span><br><span class="line">	return Math.floor(Math.random()*choice+lowValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;	</span><br><span class="line">	&lt;script src=&quot;https://code.createjs.com/createjs-2015.11.26.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;style&gt;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;canvas id=&quot;demo&quot; width=&quot;1000px&quot; height=&quot;400px&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">	</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">	var stage = new createjs.Stage(&quot;demo&quot;);</span><br><span class="line">	var container = new createjs.Container();</span><br><span class="line">	var shape = new createjs.Shape();</span><br><span class="line">	var line = new createjs.Shape();</span><br><span class="line">	var text1 = new createjs.Text(&quot;手机&quot;, &quot;15px Arial&quot;, &quot;black&quot;);</span><br><span class="line">	var text2 = new createjs.Text(&quot;电脑&quot;, &quot;15px Arial&quot;, &quot;black&quot;);</span><br><span class="line">	var text3 = new createjs.Text(&quot;汽车&quot;, &quot;15px Arial&quot;, &quot;black&quot;);</span><br><span class="line">	var text4 = new createjs.Text(&quot;美女&quot;, &quot;15px Arial&quot;, &quot;black&quot;);</span><br><span class="line">	var tip = new createjs.Text(&quot;点击红色区域抽奖&quot;, &quot;30px Arial&quot;, &quot;green&quot;);</span><br><span class="line">	var result = new createjs.Text(&quot;&quot;, &quot;30px Arial&quot;, &quot;red&quot;);</span><br><span class="line">	var jiantou = new createjs.Shape();</span><br><span class="line">	var jiangpin = [&quot;手机&quot;, &quot;电脑&quot;, &quot;汽车&quot;, &quot;美女&quot;];</span><br><span class="line">	var num;</span><br><span class="line">	var canClick = true;</span><br><span class="line">	jiantou.graphics.beginFill(&quot;green&quot;)</span><br><span class="line">		.moveTo(-5,-5).lineTo(5, -5).lineTo(0, 15);</span><br><span class="line">	jiantou.x = 100;</span><br><span class="line">	jiantou.y = 40;</span><br><span class="line">	text1.x = text2.x = -30;</span><br><span class="line">	text1.y = text4.y = -20;	</span><br><span class="line">	text2.y = text3.y = 20;</span><br><span class="line">	text3.x = text4.x = 10;	</span><br><span class="line">	container.x = 100;</span><br><span class="line">	container.y = 100;	</span><br><span class="line">	tip.x = result.x = 200;</span><br><span class="line">	tip.y = 50;</span><br><span class="line"> 	result.y = 80;</span><br><span class="line">	shape.graphics.beginFill(&quot;red&quot;).drawCircle(0,0,50);</span><br><span class="line">	line.graphics.beginStroke(&quot;#000&quot;).setStrokeStyle(2);</span><br><span class="line">	line.graphics.moveTo(-50,0).lineTo(50,0).moveTo(0, 50).lineTo(0,-50);</span><br><span class="line">	stage.addChild(container, jiantou, tip, result);</span><br><span class="line">	container.addChild(shape, line, text1, text2, text3, text4);</span><br><span class="line">	createjs.Ticker.setFPS(100);	</span><br><span class="line">	createjs.Ticker.addEventListener(&quot;tick&quot;, stage);	</span><br><span class="line">	stage.addEventListener(&quot;mousedown&quot;, getNum);</span><br><span class="line">	function getNum()&#123;</span><br><span class="line">		if(canClick)&#123;</span><br><span class="line">			canClick = false;</span><br><span class="line">			initCircle();</span><br><span class="line">			num = Math.floor(Math.random()*3+1);		</span><br><span class="line">			var rotateReg = Math.floor(Math.random()*(num*90-(num-1)*90+1)+(num-1)*90) + 360*3;</span><br><span class="line">			console.log(num,jiangpin[num-1], rotateReg);</span><br><span class="line">			rotateCircle(rotateReg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	function rotateCircle(rotateReg)&#123;</span><br><span class="line">		createjs.Tween.get(container)</span><br><span class="line">			.to(&#123;rotation:rotateReg&#125;, 5000, createjs.Ease.quadOut).call(setResult);</span><br><span class="line">	&#125;</span><br><span class="line">	function initCircle()&#123;</span><br><span class="line">		container.rotation = 0;</span><br><span class="line">	&#125;</span><br><span class="line">	function setResult()&#123;</span><br><span class="line">		result.text = &quot;恭喜你得到：&quot; + jiangpin[num-1];</span><br><span class="line">		canClick = true;</span><br><span class="line">	&#125;</span><br><span class="line">  &lt;/script&gt;             </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/createJS/" rel="tag"># createJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2016/04/28/初识jQuery-addBack/" rel="next" title="初识jQuery addBack()">
+                <i class="fa fa-chevron-left"></i> 初识jQuery addBack()
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2016/05/31/阮一峰《javascript标准教程》读书笔记/" rel="prev" title="阮一峰《javascript标准教程》读书笔记">
+                阮一峰《javascript标准教程》读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">三木</p>
+              <p class="site-description motion-element" itemprop="description">前端开发,web,javascript,技术博客,程序员</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blog/archives/">
+              
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blog/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三木</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4<span class="post-meta-divider">|</span> <a href="http://www.beian.miit.gov.cn/" target="_blank">冀ICP备16017076号</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'oRFF94LDvBxhICSHyFSQ5EUr-gzGzoHsz',
+        appKey: 'bcupnUiSFxoYCfpMMwfcffVE',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
