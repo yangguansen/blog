@@ -87,10 +87,13 @@
 <meta property="og:site_name" content="三木">
 <meta property="og:description" content="在这篇文章中，我们主要介绍Shadow DOM。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-06-05T02:26:54.278Z">
+<meta property="og:image" content="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653366684-4798-628c5f9c752ad-624325.png&is_redirect=1">
+<meta property="og:image" content="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653367203-0293-628c61a3072f1-872116.png&is_redirect=1">
+<meta property="og:updated_time" content="2022-06-05T03:20:40.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用shadow DOM自定义组件">
 <meta name="twitter:description" content="在这篇文章中，我们主要介绍Shadow DOM。">
+<meta name="twitter:image" content="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653366684-4798-628c5f9c752ad-624325.png&is_redirect=1">
 
 
 
@@ -335,7 +338,7 @@
 <li>在页面上如何创建和使用DOM。</li>
 <li>在页面上其他地方它是如何工作的。</li>
 </ul>
-<p>通常情况下，你创建DOM节点，然后把它作为子元素添加到另一个元素中， 在shadow DOM中，你创建一个有作用域的DOM树，然后添加到其他子元素中，这个DMO树就称为<code>shadow tree</code>。包含这个tree的元素就称为<code>shadow host</code>。你添加到shadow tree中的任何元素，都是在host中的，包括<style>标签，这就是shadow DOM如何实现CSS样式作用域的。</p>
+<p>通常情况下，你创建DOM节点，然后把它作为子元素添加到另一个元素中， 在shadow DOM中，你创建一个有作用域的DOM树，然后添加到其他子元素中，这个DMO树就称为<code>shadow tree</code>。包含这个tree的元素就称为<code>shadow host</code>。你添加到shadow tree中的任何元素，都是在host中的，包括<code>&lt;style&gt;</code>标签，这就是shadow DOM如何实现CSS样式作用域的。</p>
 <h4 id="创建Shadow-DOM"><a href="#创建Shadow-DOM" class="headerlink" title="创建Shadow DOM"></a>创建Shadow DOM</h4><p><code>shadow root</code>是document片段的根节点，当创建shadow DOM时，你就得到了一个shadow root，为一个元素创建shadow DOM,使用<code>element.arrachShadow()</code>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var header = document.createElement(&apos;header&apos;);</span><br><span class="line">var shadowRoot = header.attachShadow(&#123;mode: &apos;open&apos;&#125;);</span><br><span class="line">var paragraphElement = document.createElement(&apos;p&apos;);</span><br><span class="line"></span><br><span class="line">paragraphElement.innerText = &apos;Shadow DOM&apos;;</span><br><span class="line">shadowRoot.appendChild(paragraphElement);</span><br></pre></td></tr></table></figure>
 <h4 id="Shadow-DOM中的组装"><a href="#Shadow-DOM中的组装" class="headerlink" title="Shadow DOM中的组装"></a>Shadow DOM中的组装</h4><p>组装是Shadow DOM中非常重要的一个特性。<br>当写HTML时，你通过拼接不同的元素比如<code>&lt;div&gt;</code> <code>&lt;header&gt;</code> <code>&lt;form&gt;</code>等来实现页面UI，组装成的web应用，这些标签可以相互搭配。</p>
@@ -345,7 +348,7 @@
 <h4 id="轻量DOM"><a href="#轻量DOM" class="headerlink" title="轻量DOM"></a>轻量DOM</h4><p>这是一个自定义组件的写法，自定义标签中包含真实DOM，想象一下如果你想创建一个组件叫<code>extended-button</code>, 这个组件扩展了原生HTML按钮，并且你想包含一个icon和一些文字，写法大概如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;extended-button&gt;</span><br><span class="line">  &lt;!-- image 和 span 是 extended-button 的轻量 DOM --&gt;</span><br><span class="line">  &lt;img src=&quot;boot.png&quot; slot=&quot;image&quot;&gt;</span><br><span class="line">  &lt;span&gt;Launch&lt;/span&gt;</span><br><span class="line">&lt;/extended-button&gt;</span><br></pre></td></tr></table></figure>
 <p>这个“extended-button”是你定义的自定义组件，其内部的HTML称为轻量DOM。Shadow DOM在这里就是你创建的“extended-button”，它定义了它的内部结构，CSS作用域，并封装了内部实现。</p>
-<h4 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h4><p>当你在web页面上必须重复使用相同的DOM结构时，最好是定义一些模板来实现复用，这在以前也是可能实现的，但是现在可以使用HTML <template>标签更容易实现，这个元素及其内容在DOM中不会被渲染，但是可以在Javascript中被引用。</p>
+<h4 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h4><p>当你在web页面上必须重复使用相同的DOM结构时，最好是定义一些模板来实现复用，这在以前也是可能实现的，但是现在可以使用HTML <template>标签更容易实现，这个元素及其内容在DOM中不会被渲染，但是可以在Javascript中被引用。</template></p>
 <p>看个例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template id=&quot;my-paragraph&quot;&gt;</span><br><span class="line">  &lt;p&gt; Paragraph content. &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
 <p>这不会在页面上显示，除非你在Javascript中引用它，并把它添加到其他DOM中。</p>
@@ -405,9 +408,9 @@
 <h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>Youtube里大量使用了自定义组件：<br><img src="https://km.woa.com/gkm/api/img/cos-file-url?url=https%3A%2F%2Fkm-pro-1258638997.cos.ap-guangzhou.myqcloud.com%2Ffiles%2Fphotos%2Fpictures%2F202205%2F1653367203-0293-628c61a3072f1-872116.png&amp;is_redirect=1" alt="enter image description here"><br>其是使用了Polymer library来构建自定义组件。<br>后面会输出一篇Polymer library的学习笔记，敬请期待。</p>
 <p>参考文献：</p>
 <ul>
-<li><a href="https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e">https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e</a> </li>
+<li><a href="https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e" target="_blank" rel="noopener">https://blog.sessionstack.com/how-javascript-works-the-internals-of-shadow-dom-how-to-build-self-contained-components-244331c4de6e</a> </li>
 </ul>
-</style></p>
+
       
     </div>
     
@@ -500,8 +503,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -552,6 +564,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Shadow-DOM"><span class="nav-number">1.</span> <span class="nav-text">创建Shadow DOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shadow-DOM中的组装"><span class="nav-number">2.</span> <span class="nav-text">Shadow DOM中的组装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#轻量DOM"><span class="nav-number">3.</span> <span class="nav-text">轻量DOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Templates"><span class="nav-number">4.</span> <span class="nav-text">Templates</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Slots"><span class="nav-number">5.</span> <span class="nav-text">Slots</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#样式"><span class="nav-number">6.</span> <span class="nav-text">样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义组件样式"><span class="nav-number">7.</span> <span class="nav-text">自定义组件样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#host伪类"><span class="nav-number">8.</span> <span class="nav-text">:host伪类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-host-context伪类匹配主题"><span class="nav-number">9.</span> <span class="nav-text">使用:host-context伪类匹配主题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从组件外侧添加样式"><span class="nav-number">10.</span> <span class="nav-text">从组件外侧添加样式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件模型"><span class="nav-number">11.</span> <span class="nav-text">事件模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义事件"><span class="nav-number">12.</span> <span class="nav-text">自定义事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器支持"><span class="nav-number">13.</span> <span class="nav-text">浏览器支持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例"><span class="nav-number">14.</span> <span class="nav-text">案例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
