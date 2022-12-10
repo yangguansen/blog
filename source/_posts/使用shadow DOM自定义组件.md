@@ -81,7 +81,7 @@ document.body.appendChild(templateContent);
 ```
 
 这在一些框架中可以实现，但是在之前提到的，它更加原生，并且有不错的浏览器兼容性：
-![s2 (1).png](http://jxqdh.91sam.com/img/s2.png)
+![s2 (1).png](https://jxqdh.91sam.com/img/s2.png)
 
 Templates可以和自定义元素搭配，起到更好的效果，我们将自定义元素，此时你应该知道浏览器的`customElements`API，允许你自定义标签来渲染。
 
@@ -302,7 +302,7 @@ const supportsShadowDOM = !!HTMLElement.prototype.attachShadow;
 
 #### 案例
 Youtube里大量使用了自定义组件：
-![enter image description here](http://jxqdh.91sam.com/img%2Fs3.png)
+![enter image description here](https://jxqdh.91sam.com/img%2Fs3.png)
 其是使用了Polymer library来构建自定义组件。
 后面会输出一篇Polymer library的学习笔记，敬请期待。
 

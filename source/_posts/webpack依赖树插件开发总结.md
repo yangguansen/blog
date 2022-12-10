@@ -30,15 +30,15 @@ apply(compiler) {
 那webpack插件开发过程中怎么debug呢？总不能老是console吧。
 查阅一番，使用`node --inspect-brk index.js`即可以在浏览器中进行debug, index.js是项目的入口文件，我初始化一个react项目，通常我们`npm run dev`启动项目是封装了node命令，那这里我们就要改变启动命令为：`cross-env NODE_ENV='development' node --inspect-brk client/scripts/start.js`
 然后在Google浏览器的中输入`chrome://inspect/`,
-![enter image description here](http://jxqdh.91sam.com/img/1647425181-1872-6231b69d2dbaa-566462.png)
+![enter image description here](https://jxqdh.91sam.com/img/1647425181-1872-6231b69d2dbaa-566462.png)
 点击这个inspect按钮就可以调试啦。
 那我们拿到的hook参数是：
-![enter image description here](http://jxqdh.91sam.com/img/webpack-2.png)
-![enter image description here](http://jxqdh.91sam.com/img/webpack-3.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-2.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-3.png)
 可以看到source就是import需要引入的文件名，statement是这个语句的AST。
 但是怎么知道webpack当前是在处理哪个文件呢？
 答案是在parser，parser表示处理当前文件的解析器，webpack对不同文件就会使用不同的parser,可以看到webpack处理js文件是通过`javascript/auto`的type来处理。
-![enter image description here](http://jxqdh.91sam.com/img/webpack-4.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-4.png)
 parser.state.current就是webpack当前正在处理的文件。
 
 假如我们的代码是这样写的：
@@ -75,7 +75,7 @@ import App from './app';
  }
 ```
 接下来会处理的将是`@src/store/index`和`./app`的依赖，以此类推,直到处理完所有的文件，我们拿到了所有的文件及其依赖。
-![enter image description here](http://jxqdh.91sam.com/img/webpack-5.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-5.png)
 
 那么怎么知道处理完成所有文件呢？
 我们选用`finishModules` hook
@@ -116,7 +116,7 @@ const transformArrayToTree = (array) => {
 
 ```
 这样便能拿到树结构了
-![enter image description here](http://jxqdh.91sam.com/img/webpack-6.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-6.png)
 
 然后就是要把数据转成可视化页面，这里我们需要启动一个node web服务，渲染一个模板页面，把数据填充进去，并自动打开浏览器页面
 ```
@@ -169,7 +169,7 @@ async function startServer(jsonString) {
 ```
 
 打开的页面是这样子：
-![enter image description here](http://jxqdh.91sam.com/img/webpack-7.png)
+![enter image description here](https://jxqdh.91sam.com/img/webpack-7.png)
 
 通过点击节点来查看每个页面的依赖。
 
