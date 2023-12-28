@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Xterm.js," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="前端开发,web,javascript,技术博客,程序员">
-<meta name="keywords" content="前端开发,web,javascript,技术博客,程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="三木">
-<meta property="og:url" content="https://yangguansen.github.io/archives/index.html">
+<meta name="description" content="Xterm.js是一个用来做Web Terminal的前端组件，VScode的terminal也是基于Xterm.js实现，它支持DOM、Canvas、WebGL渲染，能够快速渲染大量文字，最大支持2G的字符，本文介绍如何使用Xterm+Websocket来做一个Log Viewer。">
+<meta name="keywords" content="Xterm.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Xterm.js做Log Viewer">
+<meta property="og:url" content="https://yangguansen.github.io/2023/12/27/使用Xterm做Log Viewer/index.html">
 <meta property="og:site_name" content="三木">
-<meta property="og:description" content="前端开发,web,javascript,技术博客,程序员">
+<meta property="og:description" content="Xterm.js是一个用来做Web Terminal的前端组件，VScode的terminal也是基于Xterm.js实现，它支持DOM、Canvas、WebGL渲染，能够快速渲染大量文字，最大支持2G的字符，本文介绍如何使用Xterm+Websocket来做一个Log Viewer。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-12-28T02:30:07.629Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="三木">
-<meta name="twitter:description" content="前端开发,web,javascript,技术博客,程序员">
+<meta name="twitter:title" content="使用Xterm.js做Log Viewer">
+<meta name="twitter:description" content="Xterm.js是一个用来做Web Terminal的前端组件，VScode的terminal也是基于Xterm.js实现，它支持DOM、Canvas、WebGL渲染，能够快速渲染大量文字，最大支持2G的字符，本文介绍如何使用Xterm+Websocket来做一个Log Viewer。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://yangguansen.github.io/archives/"/>
+  <link rel="canonical" href="https://yangguansen.github.io/2023/12/27/使用Xterm做Log Viewer/"/>
 
 
 
 
 
-  <title>归档 | 三木</title>
+  <title>使用Xterm.js做Log Viewer | 三木</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -228,430 +229,196 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://yangguansen.github.io/2023/12/27/使用Xterm做Log Viewer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="三木">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三木">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">使用Xterm.js做Log Viewer</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-12-27T19:02:32+08:00">
+                2023-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        好! 目前共计 79 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/12/27/使用Xterm做Log Viewer/" itemprop="url">
-              
-                <span itemprop="name">使用Xterm.js做Log Viewer</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-12-27T19:02:32+08:00"
-              content="2023-12-27" >
-          12-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/08/24/typescript namespace 嵌套引起的编译错误/" itemprop="url">
-              
-                <span itemprop="name">typescript namespace嵌套引起的编译错误</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-08-24T18:11:52+08:00"
-              content="2023-08-24" >
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/12/27/使用Xterm做Log Viewer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2023/12/27/使用Xterm做Log Viewer/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2022">2022</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2022/05/24/使用shadow DOM自定义组件/" itemprop="url">
-              
-                <span itemprop="name">使用shadow DOM自定义组件</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-05-24T12:44:30+08:00"
-              content="2022-05-24" >
-          05-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2022/03/17/webpack依赖树插件开发总结/" itemprop="url">
-              
-                <span itemprop="name">webpack依赖树插件开发总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2022-03-17T17:22:14+08:00"
-              content="2022-03-17" >
-          03-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2021">2021</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/06/16/Web安全头/" itemprop="url">
-              
-                <span itemprop="name">Web安全头</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-06-16T09:50:10+08:00"
-              content="2021-06-16" >
-          06-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/29/Vue+vue-router+vuex原理分析/" itemprop="url">
-              
-                <span itemprop="name">Vue+vue-router+vuex原理分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-29T23:11:10+08:00"
-              content="2020-05-29" >
-          05-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/03/06/docker+node记录/" itemprop="url">
-              
-                <span itemprop="name">docker+node记录</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-03-06T11:36:45+08:00"
-              content="2020-03-06" >
-          03-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/28/ionic混合APP开发小结/" itemprop="url">
-              
-                <span itemprop="name">ionic混合APP开发小结</span>
-              
-            </a>
-        
-      </h2>
+        </div>
+      </header>
+    
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-28T09:14:52+08:00"
-              content="2018-12-28" >
-          12-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/13/如何编写一个webpack-loader/" itemprop="url">
-              
-                <span itemprop="name">如何编写一个webpack-loader</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-13T14:14:52+08:00"
-              content="2018-12-13" >
-          12-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/12/设计模式学习之九-装饰者模式/" itemprop="url">
-              
-                <span itemprop="name">设计模式学习之九-装饰者模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-12T11:04:11+08:00"
-              content="2018-09-12" >
-          09-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>Xterm.js是一个用来做Web Terminal的前端组件，VScode的terminal也是基于Xterm.js实现，它支持DOM、Canvas、WebGL渲染，能够快速渲染大量文字，最大支持2G的字符，本文介绍如何使用<code>Xterm</code>+<code>Websocket</code>来做一个Log Viewer。<br><a id="more"></a> </p>
+<blockquote>
+<p>项目背景</p>
+</blockquote>
+<p>在日常工作中，服务器上会产生大量日志，比如数据库日志，服务运行日志，因此我们需要通过Web浏览器查看日志，需要包含的功能如下：</p>
+<ul>
+<li>初始请求（500条）最近的日志</li>
+<li>能够显示实时产生的日志</li>
+<li>向上滚动页面，能够查询之前产生的日志</li>
+</ul>
+<blockquote>
+<p>初始请求</p>
+</blockquote>
+<p>当进入页面时，我们需要发送一个Websocket请求到后端，比如请求最近的500条日志，后端根据日志的行数，每一行对应一条数据，每条数据需要带上该条日志在日志文件中的索引行数，响应给前端。然后前端通过<code>xterm.write()</code>渲染日志。</p>
+<blockquote>
+<p>实时渲染</p>
+</blockquote>
+<p>当初始请求结束之后，需要渲染实时产生的日志，当后端监听到日志文件的行数增加时，即有新的日志产生，便推送给前端，前端渲染出来，Xterm支持自动滚动到底部，因此页面便会有自动滚动到底部的效果。</p>
+<blockquote>
+<p>加载之前的日志</p>
+</blockquote>
+<p>当页面向上滚动，我们可以监听鼠标<code>wheel</code>事件，当滚动到顶部时，前端发送请求，我们需要将当前第一条的日志索引行数作为参数，再去请求该行之前的500条，返回给前端，由于Xterm不支持prepend数据，因为我们需要重新渲染所有日志，此时<br>需要加一个loading效果，由于Xterm支持5M/s的渲染速度，因此重新渲染也会非常快速的完成，整个loading的等待时间并不会久。由于xterm.write()是异步的，我们可以在渲染完最后一条日志之后，认定他渲染完成，重新渲染完之后，我们再滚动到请求之前的行数即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//  Fake code</span><br><span class="line">document.addEventListener(&apos;wheel&apos;, async () =&gt; &#123;</span><br><span class="line">  if(xterm.toTop())&#123;</span><br><span class="line">    const data = await requestAPI(logs[0].lineIndex);</span><br><span class="line">    const newLogs = [...data, ...logs];</span><br><span class="line">    newLogs.forEach((log, i) =&gt; &#123;</span><br><span class="line">        xterm.write(log);</span><br><span class="line">        if(i === newLogs.length - 1)&#123;</span><br><span class="line">            xterm.scrollToLine(data.length);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>大量数据场景的优化</p>
+</blockquote>
+<p>如果一直向上翻动页面，会不停地prepend日志，当超过3W条之后，能够明显感觉到loading的效果超过了1秒，因此在向上翻动时，我们可以只渲染新加载的日志，而把看不到的日志放到数组中，等页面向下滚动时，再渲染出来。</p>
+<p>而实时渲染的日志由于不需要重新渲染，因此数据量过大不需要理会，因为之前已经渲染的文本会被xterm自动缓存起来。</p>
+<blockquote>
+<p>坑点</p>
+</blockquote>
+<ul>
+<li>xterm的api支持监听xterm滚动事件，但是鼠标滚动和实时数据渲染滚动都会触发它的滚动事件，因此我们需要用鼠标的wheel来监听，因为当因为日志增加时，自身的渲染触发滚动事件并不是我们期望的。</li>
+</ul>
+<ul>
+<li>在手机端上使用Canvas渲染时，xterm并没有加入DPR的逻辑，因此渲染出来的文字大小会翻倍，所以在手机端还是需要切换成DOM渲染。</li>
+</ul>
+<ul>
+<li>由于我们既要请求实时数据，又要请求之前的数据，且是用的同一个websocket连接，当向上滚动时，我们就暂停请求实时数据，因为即便请求回来，它也不在用户的可视范围之内，<br>当用户向下滚动到底部时，再去请求即可。</li>
+</ul>
+<p>（完）</p>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xterm-js/" rel="tag"># Xterm.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/08/24/typescript namespace 嵌套引起的编译错误/" rel="next" title="typescript namespace嵌套引起的编译错误">
+                <i class="fa fa-chevron-left"></i> typescript namespace嵌套引起的编译错误
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -659,6 +426,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -871,6 +645,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
